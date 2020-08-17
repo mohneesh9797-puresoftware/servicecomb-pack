@@ -38,6 +38,10 @@ git:
 install: true
 jdk:
 - openjdk8
-script: ./scripts/test.sh
+script: 
+    - if [[ "${TRAVIS_CPU_ARCH}" == "arm64" ]]; then
+            sudo apt-get install -y maven openjdk-8-jdk;
+      fi
+    - ./scripts/test.sh
 after_success:
 - if [ "$TRAVIS_EVENT_TYPE" == "cron" ]; then bash -x scripts/deploy.sh ; fi
